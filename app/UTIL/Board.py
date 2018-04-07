@@ -44,6 +44,10 @@ class board:
                 elif self.board[i][j]!=0 and self.board[i+1][j]==0:
                     self.board[i + 1][j] = self.board[i][j]
                     self.board[i][j] = 0
+                    while i >0:
+                        self.board[i][j] = self.board[i - 1][j]
+                        i-=1
+                    self.board[i][j] =0
 
 
     def move_upword(self):
@@ -59,6 +63,10 @@ class board:
                 elif self.board[i][j]!=0 and self.board[i-1][j]==0:
                     self.board[i - 1][j] = self.board[i][j]
                     self.board[i][j] = 0
+                    while i <self.size-1:
+                        self.board[i][j] = self.board[i + 1][j]
+                        i+=1
+                    self.board[i][j] =0
 
     def move_rightside(self):
         for i in range(self.size):
@@ -73,6 +81,10 @@ class board:
                 elif self.board[i][j]!=0 and self.board[i][j+1]==0:
                     self.board[i][j+1] = self.board[i][j]
                     self.board[i][j] = 0
+                    while j >0:
+                        self.board[i][j] = self.board[i][j-1]
+                        j-=1
+                    self.board[i][j] =0
 
 
     def move_leftside(self):
@@ -88,14 +100,22 @@ class board:
                 elif self.board[i][j]!=0 and self.board[i][j-1]==0:
                     self.board[i][j-1] = self.board[i][j]
                     self.board[i][j] = 0
+                    while j <self.size-1:
+                        self.board[i][j] = self.board[i ][j+1]
+                        j+=1
+                    self.board[i][j] =0
 
 
 
 
     def generate_number(self):
+        numbers=[2]*15
+        numbers.extend([4]*4)
+        numbers.extend([8]*1)
+
         i,j=random.randint(0,self.size-1),random.randint(0,self.size-1)
         if self.board[i][j]==0:
-            self.board[i][j]=2
+            self.board[i][j]=random.choice(numbers)
             self.print_board()
         elif any(0 in sublist for sublist in self.board):
             self.generate_number()
